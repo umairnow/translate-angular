@@ -4,24 +4,26 @@ import { DataService } from 'src/app/services/data.service';
 @Component({
   selector: 'app-translate',
   templateUrl: './translate.component.html',
-  styleUrls: ['./translate.component.css']
+  styleUrls: ['./translate.component.css'],
 })
 export class TranslateComponent implements OnInit {
 
-  constructor(private dataService: DataService) { 
+  constructor(private dataService: DataService) {
   }
 
   columnDefs = [
     {headerName: 'Key', field: 'key', sortable: true, filter: true},
-    {headerName: 'English', field: 'enText', sortable: true, filter: true, editable: true},
-    {headerName: 'Norwegian', field: 'noText', sortable: true, filter: true, editable: true},
-    {headerName: 'Swedish', field: 'svText', sortable: true, filter: true, editable: true}
+    {headerName: 'English', field: 'english', sortable: true, filter: true, editable: true},
+    {headerName: 'Norwegian', field: 'norwegian', sortable: true, filter: true, editable: true},
+    {headerName: 'Swedish', field: 'swedish', sortable: true, filter: true, editable: true},
+    {headerName: 'Danish', field: 'danish', sortable: true, filter: true, editable: true}
   ];
 
   rowData = [];
 
   ngOnInit() {
-    this.rowData = this.dataService.getTranslationData();
+    console.log('OnInit');
+    this.rowData = this.dataService.translations;
   }
 
 }
