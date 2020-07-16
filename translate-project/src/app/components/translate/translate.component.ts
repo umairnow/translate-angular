@@ -12,7 +12,7 @@ export class TranslateComponent implements OnInit {
   }
 
   columnDefs = [
-    {headerName: 'Key', field: 'key', sortable: true, filter: true},
+    {headerName: 'Key', field: 'key', sortable: true, filter: true, checkboxSelection: true},
     {headerName: 'English', field: 'english', sortable: true, filter: true, editable: true},
     {headerName: 'Norwegian', field: 'norwegian', sortable: true, filter: true, editable: true},
     {headerName: 'Swedish', field: 'swedish', sortable: true, filter: true, editable: true},
