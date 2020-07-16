@@ -10,7 +10,7 @@ import { TranslateModel } from '../Interfaces/translate-modal';
 export class ApiService {
   constructor(private http: HttpClient) { }
 
-  private baseURL = 'http://localhost:8080/CleanPilotServer/services';
+  private baseURL = 'http://localhost:8080';
   private headers = new HttpHeaders()
     .set('Authorization', 'Basic Ympvcm5AY2xlYW5waWxvdGRpcmVjdC5ubzpkZW1v')
     .set('Content-Type', 'application/json');

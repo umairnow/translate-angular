@@ -23,7 +23,10 @@ export class TranslateComponent implements OnInit {
 
   ngOnInit() {
     console.log('OnInit');
-    this.rowData = this.dataService.translations;
+    this.dataService.getTranslationData().subscribe(translations => {
+      console.log(translations);
+      this.rowData = translations;
+    });
   }
 
 }

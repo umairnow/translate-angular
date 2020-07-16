@@ -1,18 +1,14 @@
 import {Injectable} from '@angular/core';
 import { TranslateModel } from '../Interfaces/translate-modal';
 import { ApiService } from './api.service';
+import {Observable} from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
-  translations: TranslateModel[];
-  constructor(private apiService: ApiService) {
-    this.getTranslationData();
-  }
+  constructor(private apiService: ApiService) {}
 
-  getTranslationData(): void {
-    this.apiService.getTranslations().subscribe(translations => {
-      this.translations = translations;
-    });
+  getTranslationData(): Observable<TranslateModel[]> {
+    return this.apiService.getTranslations();
   }
 
 }
