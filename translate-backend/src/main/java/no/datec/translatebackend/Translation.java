@@ -47,5 +47,10 @@ public class Translation {
         this.danish = danish;
     }
 
-
+    public void update(Translation translation) {
+        this.setEnglish(translation.getEnglish());
+        this.setNorwegian(translation.getNorwegian());
+        this.setSwedish(translation.getSwedish());
+        this.setDanish(translation.getDanish());
+    }
 }

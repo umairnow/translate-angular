@@ -10,19 +10,41 @@ import { TranslateModel } from '../Interfaces/translate-modal';
 export class ApiService {
   constructor(private http: HttpClient) { }
 
-  private baseURL = 'http://localhost:8080';
-  private headers = new HttpHeaders()
-    .set('Authorization', 'Basic Ympvcm5AY2xlYW5waWxvdGRpcmVjdC5ubzpkZW1v')
-    .set('Content-Type', 'application/json');
-  private httpOptions = {headers: this.headers};
+  private baseURL = 'http://localhost:8080/translate';
+  private httpOptions = {headers: new HttpHeaders()
+      .set('Content-Type', 'application/json')};
 
   /** GET translations from the server */
   getTranslations(): Observable<TranslateModel[]> {
-    const url = `${this.baseURL}/translate/translations.json`;
+    const url = `${this.baseURL}/translations.json`;
     return this.http.get<TranslateModel[]>(url, this.httpOptions)
       .pipe(
         tap(_ => `Fetched translations`),
         catchError(this.handleError<TranslateModel[]>('getTranslations', []))
+      );
+  }
+
+  addTranslation(translationModel: TranslateModel): void {
+    const url = `${this.baseURL}/translation.json`;
+    this.http.post(url, translationModel, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<TranslateModel>('addTranslation', null))
+      );
+  }
+
+  updateTranslation(translationModel: TranslateModel): void {
+    const url = `${this.baseURL}/translation.json`;
+    this.http.put(url, translationModel, this.httpOptions)
+      .pipe(
+        catchError(this.handleError<TranslateModel>('updateTranslation', null))
+      );
+  }
+
+  deleteTranslation(key: string): void {
+    const url = `${this.baseURL}/translation${key}.json`;
+    this.http.delete(url)
+      .pipe(
+        catchError(this.handleError<TranslateModel>('deleteTranslation', null))
       );
   }
 

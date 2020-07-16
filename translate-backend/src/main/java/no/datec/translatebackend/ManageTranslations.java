@@ -11,6 +11,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Predicate;
 
 @Service("translationService")
 public class ManageTranslations implements TranslationService{
@@ -24,6 +25,14 @@ public class ManageTranslations implements TranslationService{
     }
 
     @Override
+    public boolean updateTranslation(Translation translation) {
+        if (getTranslations().removeIf(t -> t.getKey().equals(translation.getKey()))) {
+            getTranslations().add(translation);
+        }
+        return storeFile() != null;
+    }
+
+    @Override
     public boolean addTranslations(List<Translation> translations) {
         translationList = translations;
         return storeFile() != null;
@@ -31,15 +40,7 @@ public class ManageTranslations implements TranslationService{
 
     @Override
     public boolean deleteTranslation(String key) {
-        ArrayList<Integer> indices = new ArrayList<>();
-        for (int i=0; i<getTranslations().size(); i++) {
-            if (getTranslations().get(i).getKey().equals(key)) {
-                indices.add(i);
-            }
-        }
-        for (Integer i : indices) {
-            getTranslations().remove(i);
-        }
+        getTranslations().removeIf(translation -> translation.getKey().equals(key));
         return storeFile() != null;
     }
 
@@ -50,7 +51,6 @@ public class ManageTranslations implements TranslationService{
             ObjectMapper objectMapper = new ObjectMapper();
             try {
                 translationList = Arrays.asList(objectMapper.readValue(fileStorageLocation.toFile(), Translation[].class));
-                if (translationList == null) translationList = new ArrayList<>();
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface TranslationService {
     boolean addTranslation(Translation translation);
+    boolean updateTranslation(Translation translation);
     boolean addTranslations(List<Translation> translations);
     boolean deleteTranslation(String key);
     List<Translation> getTranslations();

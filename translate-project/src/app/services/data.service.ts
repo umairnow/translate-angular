@@ -11,4 +11,15 @@ export class DataService {
     return this.apiService.getTranslations();
   }
 
+  addTranslation(translation: TranslateModel): void {
+    this.apiService.addTranslation(translation);
+  }
+
+  updateTranslation(translation: TranslateModel): void {
+    this.apiService.updateTranslation(translation);
+  }
+
+  deleteTranslation(key: string): void {
+    this.apiService.deleteTranslation(key);
+  }
 }

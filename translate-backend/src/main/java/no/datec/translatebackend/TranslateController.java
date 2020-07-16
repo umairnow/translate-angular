@@ -9,7 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +39,13 @@ public class TranslateController {
         return translationService.addTranslation(translation);
     }
 
+    @PutMapping(value = {"/translate/translation.json"},
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public boolean updateTranslation(@RequestBody Translation translation) throws IOException {
+        return translationService.updateTranslation(translation);
+    }
+
     @PostMapping(value = {"/translate/translations.json"},
             consumes = {MediaType.APPLICATION_JSON_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -45,7 +54,7 @@ public class TranslateController {
     }
 
     @DeleteMapping("/translate/translation/{key}.json")
-    public boolean deleteTranslation(@PathParam("key") String key) throws IOException {
+    public boolean deleteTranslation(@PathVariable String key) throws IOException {
         return translationService.deleteTranslation(key);
     }
 }
