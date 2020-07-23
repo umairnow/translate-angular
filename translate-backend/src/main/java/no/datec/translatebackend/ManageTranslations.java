@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,7 +39,10 @@ public class ManageTranslations implements TranslationService {
 
     @Override
     public boolean deleteTranslation(String key) {
-        getTranslations().removeIf(translation -> translation.getKey().equals(key));
+        ArrayList<Translation> arrayList = new ArrayList<>();
+        arrayList.addAll(getTranslations());
+        arrayList.removeIf(translation -> translation.getKey().equals(key));
+        translationList = arrayList;
         return storeFile() != null;
     }
 
