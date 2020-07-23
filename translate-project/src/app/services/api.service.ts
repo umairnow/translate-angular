@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
+import {Observable, of, throwError} from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 
 import { TranslateModel } from '../Interfaces/translate-modal';
@@ -20,7 +20,7 @@ export class ApiService {
     return this.http.get<TranslateModel[]>(url, this.httpOptions)
       .pipe(
         tap(_ => `Fetched translations`),
-        catchError(this.handleError<TranslateModel[]>('getTranslations', []))
+        catchError(this.handleError)
       );
   }
 
@@ -28,35 +28,35 @@ export class ApiService {
     const url = `${this.baseURL}/translations.json`;
     return this.http.post(url, translations, this.httpOptions)
       .pipe(
-        catchError(this.handleError<TranslateModel>('updateTranslation', null))
+        catchError(this.handleError)
       );
   }
 
   deleteTranslation(key: string): Observable<object> {
-    const url = `${this.baseURL}/translation${key}.json`;
+    const url = `${this.baseURL}/translation/${key}.json`;
     return this.http.delete(url)
       .pipe(
-        catchError(this.handleError<TranslateModel>('deleteTranslation', null))
+        catchError(this.handleError)
       );
   }
 
   /**
    * Handle Http operation that failed.
    * Let the app continue.
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
    */
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.error(error); // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      console.log(`${operation} failed: ${error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T);
-    };
+  private handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      console.error('An error occurred:', error.error.message);
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong.
+      console.error(
+        `Backend returned code ${error.status}, ` +
+        `body was: ${error.error}`);
+    }
+    // Return an observable with a user-facing error message.
+    return throwError(
+      'Something bad happened; please try again later.');
   }
 }

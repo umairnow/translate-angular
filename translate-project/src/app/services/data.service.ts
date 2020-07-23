@@ -22,9 +22,12 @@ export class DataService {
     });
   }
 
-  saveChanges(): Observable<object> {
+  saveChanges(): void {
     const excluded = this.data.filter(v => v.key !== 'PLACE_HOLDER');
-    return this.apiService.updateTranslation(excluded);
+    this.apiService.updateTranslation(excluded).subscribe(response => {
+      this.data = excluded;
+      this.translationSource.next({add: null, delete: null, list: this.data, update: null});
+    });
   }
 
   addNewTranslation(translation: TranslateModel): void {
@@ -39,6 +42,7 @@ export class DataService {
   }
 
   deleteSelectedTranslation(): void {
+    if (this.selectedItem == null) { return; }
     const index = this.data.findIndex(v => v.key === this.selectedItem.key);
     const deletedItem = this.data.find(v => v.key === this.selectedItem.key);
     if (index !== -1) {
