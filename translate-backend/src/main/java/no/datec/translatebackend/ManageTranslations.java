@@ -8,13 +8,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 
 @Service("translationService")
-public class ManageTranslations implements TranslationService{
+public class ManageTranslations implements TranslationService {
     private final String documentName = "datec-translate.json";
     private List<Translation> translationList;
 

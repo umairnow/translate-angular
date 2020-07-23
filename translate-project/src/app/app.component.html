@@ -91,8 +91,8 @@
 
   svg#clouds {
     position: fixed;
-    bottom: -160px;
-    left: -230px;
+    bottom: 0;
+    left: 0;
     z-index: -10;
     width: 1920px;
   }
@@ -108,12 +108,27 @@
     .card.highlight-card span {
       margin-left: 72px;
     }
+
+    .example-flex-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .example-button-row {
+      display: table-cell;
+      width: 490px;
+    }
+
+    .example-button-row .mat-button-base {
+      margin: 8px 8px 8px 8px;
+    }
   }
 </style>
 
 <!-- Toolbar -->
 <div class="toolbar" role="banner"></div>
-
+<app-user-input></app-user-input>
 <app-translate class="content"></app-translate>
 
 <div class="content" role="main">

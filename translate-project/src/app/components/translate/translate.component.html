@@ -1,7 +1,10 @@
 <ag-grid-angular
-    style="width: 800px; height: 800px;"
-    class="ag-theme-material"
-    [rowData]="rowData"
-    [columnDefs]="columnDefs"
-    >
+  style="width: 1000px; height: 700px;"
+  class="ag-theme-material"
+  [rowData]="rowData"
+  [columnDefs]="columnDefs"
+  (selectionChanged)="onSelectionChanged()"
+  (gridReady)="onGridReady($event)"
+  [enableCellChangeFlash]="true"
+>
 </ag-grid-angular>

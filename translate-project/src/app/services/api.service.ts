@@ -24,25 +24,17 @@ export class ApiService {
       );
   }
 
-  addTranslation(translationModel: TranslateModel): void {
-    const url = `${this.baseURL}/translation.json`;
-    this.http.post(url, translationModel, this.httpOptions)
-      .pipe(
-        catchError(this.handleError<TranslateModel>('addTranslation', null))
-      );
-  }
-
-  updateTranslation(translationModel: TranslateModel): void {
-    const url = `${this.baseURL}/translation.json`;
-    this.http.put(url, translationModel, this.httpOptions)
+  updateTranslation(translations: TranslateModel[]): Observable<any> {
+    const url = `${this.baseURL}/translations.json`;
+    return this.http.post(url, translations, this.httpOptions)
       .pipe(
         catchError(this.handleError<TranslateModel>('updateTranslation', null))
       );
   }
 
-  deleteTranslation(key: string): void {
+  deleteTranslation(key: string): Observable<object> {
     const url = `${this.baseURL}/translation${key}.json`;
-    this.http.delete(url)
+    return this.http.delete(url)
       .pipe(
         catchError(this.handleError<TranslateModel>('deleteTranslation', null))
       );
